@@ -1,5 +1,5 @@
 // npx parcel index.html
-// npx parcel build index.html --public-url=/typescript-learning/dragable-div/dist/
+// npx parcel build index.html --public-url ./
 
 // var a: string = 'hi'
 // console.log('hi')
