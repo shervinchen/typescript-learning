@@ -1,0 +1,23 @@
+.calc {
+  display: inline-block;
+}
+.calc button {
+  width: 3em;
+  height: 3em;
+}
+.calc button.text-Clear {
+  width: 9em;
+}
+.calc button.text-0 {
+  width: 6em;
+}
+.calc .output {
+  position: relative;
+  height: 3em;
+  border: 1px solid grey;
+}
+.calc .output span {
+  position: absolute;
+  right: .2em;
+  bottom: .2em;
+}
