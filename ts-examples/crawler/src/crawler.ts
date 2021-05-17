@@ -1,22 +1,41 @@
 import superagent from 'superagent'
 import cheerio from 'cheerio'
+import fs from 'fs'
+import path from 'path'
 
 interface Course {
   title: string
   count: number
 }
 
+interface CourseResult {
+  time: number
+  data: Course[]
+}
+
+interface JsonContent {
+  [propName: number]: Course[]
+}
+
 class Crawler {
   private secret = 'x3b174jsx'
   private url = `http://www.dell-lee.com/typescript/demo.html?secret=${this.secret}`
+  private filePath = path.resolve(__dirname, '../data/course.json')
 
   constructor() {
-    this.getRawHtml()
+    this.initSpiderProcess()
+  }
+
+  async initSpiderProcess() {
+    const html = await this.getRawHtml()
+    const courseInfo = this.getCourseInfo(html)
+    const fileContent = this.generateJsonContent(courseInfo)
+    this.writeFile(JSON.stringify(fileContent))
   }
 
   async getRawHtml() {
     const result = await superagent.get(this.url)
-    this.getCourseInfo(result.text)
+    return result.text
   }
 
   getCourseInfo(html: string) {
@@ -29,10 +48,23 @@ class Crawler {
       const count = parseInt(descs.eq(1).text().split('：')[1], 10)
       courseInfos.push({ title, count })
     })
-    const result = {
+    return {
       time: (new Date()).getTime(),
       data: courseInfos
     }
+  }
+
+  generateJsonContent(courseInfo: CourseResult) {
+    let fileContent: JsonContent = {}
+    if (fs.existsSync(this.filePath)) {
+      fileContent = JSON.parse(fs.readFileSync(this.filePath, 'utf-8'))
+    }
+    fileContent[courseInfo.time] = courseInfo.data
+    return fileContent
+  }
+
+  writeFile(content: string) {
+    fs.writeFileSync(this.filePath, content)
   }
 }
 
