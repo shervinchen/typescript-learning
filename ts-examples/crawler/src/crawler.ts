@@ -15,18 +15,18 @@ class Crawler {
     this.initSpiderProcess()
   }
 
-  async initSpiderProcess() {
+  private async initSpiderProcess() {
     const html = await this.getRawHtml()
     const fileContent = this.analyzer.analyze(html, this.filePath)
     this.writeFile(fileContent)
   }
 
-  async getRawHtml() {
+  private async getRawHtml() {
     const result = await superagent.get(this.url)
     return result.text
   }
 
-  writeFile(content: string) {
+  private writeFile(content: string) {
     fs.writeFileSync(this.filePath, content)
   }
 }
@@ -34,5 +34,5 @@ class Crawler {
 const secret = 'x3b174jsx'
 const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`
 
-const analyzer = new DellAnalyzer()
+const analyzer = DellAnalyzer.getInstance()
 new Crawler(url, analyzer)
