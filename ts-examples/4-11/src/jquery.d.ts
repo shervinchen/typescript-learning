@@ -1,15 +1,20 @@
 // declare var $: (param: () => void) => void
 
-interface JqueryInstance {
-  html: (html: string) => JqueryInstance
-}
-
-declare function $(readyFunc: () => void): void
-declare function $(selector: string): JqueryInstance
-declare namespace $ {
-  namespace fn {
-    class init { }
+declare module 'jquery' {
+  interface JqueryInstance {
+    html: (html: string) => JqueryInstance
   }
+
+  function $(readyFunc: () => void): void
+  function $(selector: string): JqueryInstance
+
+  namespace $ {
+    namespace fn {
+      class init { }
+    }
+  }
+
+  export = $
 }
 
 // interface JQuery {
