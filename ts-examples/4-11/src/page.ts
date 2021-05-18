@@ -1,4 +1,6 @@
 {
-  const teacher: string = 'csd'
-  console.log(teacher)
+  $(function () {
+    $('body').html('<div>123</div>')
+    new $.fn.init()
+  })
 }

@@ -445,10 +445,9 @@ id) /*: string*/
 {
   $(function () {
     $('body').html('<div>123</div>');
-    new $.fn.init();
   });
 }
 
 },{}]},["2ody5","2Qhev"], "2Qhev", "parcelRequiref50a")
 
-//# sourceMappingURL=index.a0445843.js.map
+//# sourceMappingURL=index.HASH_REF_a217a0cb214520d72bb65760a0445843.js.map
