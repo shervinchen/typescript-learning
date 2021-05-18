@@ -1,0 +1,4 @@
+{
+  const teacher = 'csd';
+  console.log(teacher);
+}
