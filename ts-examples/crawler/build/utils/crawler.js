@@ -46,7 +46,7 @@ var Crawler = /** @class */ (function () {
     function Crawler(url, analyzer) {
         this.url = url;
         this.analyzer = analyzer;
-        this.filePath = path_1.default.resolve(__dirname, '../data/course.json');
+        this.filePath = path_1.default.resolve(__dirname, '../../data/course.json');
         this.initSpiderProcess();
     }
     Crawler.prototype.initSpiderProcess = function () {
