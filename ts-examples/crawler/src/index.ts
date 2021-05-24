@@ -1,6 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express'
 import bodyParser from 'body-parser'
 import cookieSession from 'cookie-session'
+import 'reflect-metadata'
+import './controller/LoginController'
+import './controller/CrawlerController'
 import router from './router'
 
 const app = express()
