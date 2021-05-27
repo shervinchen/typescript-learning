@@ -1,11 +1,13 @@
 .home-container {
-  width: 300px;
-  padding: 20px;
-  margin: 100px auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 0 50px;
 }
 
 .home-container .ant-btn {
   margin-right: 10px;
+}
+
+.home-container .buttons {
+  width: 200px;
+  padding: 20px;
+  margin: 30px auto;
 }

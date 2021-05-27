@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, message } from 'antd';
 import axios from 'axios';
+import ReactEcharts from 'echarts-for-react';
 import './index.css';
 
 const Home = () => {
@@ -15,6 +16,14 @@ const Home = () => {
     });
   }, []);
 
+  const handleCrawler = () => {
+    axios.get('/api/getData').then((res) => {
+      if (res.data?.data) {
+        message.success('crawler success!');
+      }
+    });
+  };
+
   const handleLogout = () => {
     axios.get('/api/logout').then((res) => {
       if (res.data?.data) {
@@ -25,15 +34,23 @@ const Home = () => {
     });
   };
 
+  const getOption: () => echarts.EChartOption = () => {
+    return {};
+  };
+
   return (
     <>
       {loginStatus ? (
         <div className="home-container">
-          <Button type="primary">爬取</Button>
-          <Button type="primary">展示</Button>
-          <Button type="primary" onClick={() => handleLogout()}>
-            退出
-          </Button>
+          <div className="buttons">
+            <Button type="primary" onClick={() => handleCrawler()}>
+              爬取
+            </Button>
+            <Button type="primary" onClick={() => handleLogout()}>
+              退出
+            </Button>
+          </div>
+          <ReactEcharts option={getOption()} />
         </div>
       ) : (
         <Redirect to="/login" />
