@@ -1,54 +1,43 @@
 import { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, message } from 'antd';
-import axios from 'axios';
+import request from '../../request';
 import ReactEcharts from 'echarts-for-react';
 import moment from 'moment';
 import './index.css';
 
-interface CourseItem {
-  title: string;
-  count: number;
-}
-
-interface Data {
-  [key: string]: CourseItem[];
-}
-
-interface LineData {
-  name: string;
-  type: string;
-  data: number[];
-}
-
 const Home = () => {
   const [loginStatus, setLoginStatus] = useState(true);
-  const [data, setData] = useState<Data>({});
+  const [data, setData] = useState<responseResult.Data>({});
 
   useEffect(() => {
-    axios.get('/api/isLogin').then((res) => {
-      if (!res.data?.data) {
+    request.get('/api/isLogin').then((res) => {
+      const data: responseResult.isLogin = res.data;
+      if (!data) {
         setLoginStatus(false);
       }
     });
-    axios.get('/api/showData').then((res) => {
-      if (res.data?.data) {
-        setData(res.data.data);
+    request.get('/api/showData').then((res) => {
+      const data: responseResult.Data = res.data;
+      if (data) {
+        setData(data);
       }
     });
   }, []);
 
   const handleCrawler = () => {
-    axios.get('/api/getData').then((res) => {
-      if (res.data?.data) {
+    request.get('/api/getData').then((res) => {
+      const data: responseResult.getData = res.data;
+      if (data) {
         message.success('crawler success!');
       }
     });
   };
 
   const handleLogout = () => {
-    axios.get('/api/logout').then((res) => {
-      if (res.data?.data) {
+    request.get('/api/logout').then((res) => {
+      const data: responseResult.logout = res.data;
+      if (data) {
         setLoginStatus(false);
       } else {
         message.error('logout failed!');
@@ -75,7 +64,7 @@ const Home = () => {
           : (tempData[title] = [count]);
       });
     }
-    const result: LineData[] = [];
+    const result: echarts.EChartOption.Series[] = [];
     for (let i in tempData) {
       result.push({
         name: i,

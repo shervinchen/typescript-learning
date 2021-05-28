@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import request from '../../request';
 import qs from 'qs';
 import './index.css';
 import { Redirect } from 'react-router-dom';
@@ -11,14 +11,15 @@ const Login = () => {
 
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
-    axios
+    request
       .post('/api/login', qs.stringify({ password: values.password }), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
       .then((res) => {
-        if (res.data?.data) {
+        const data: responseResult.login = res.data;
+        if (data) {
           setLoginStatus(true);
         } else {
           message.error('login failed!');
